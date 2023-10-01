@@ -1,1 +1,240 @@
+from tkinter import *
+from tkinter import messagebox
 
+root = Tk()
+root.title("Corona Helpdesk")
+root.geometry("450x620")
+
+def destroy1():
+    page.destroy()
+    subpage.destroy()
+    next.destroy()
+    page2()
+
+
+page = Label(root,text = "Welcome to the Corona Helpdesk",font = "1")
+page.place(x = 95,y = 250)
+subpage = Label(root,text = "Press Next to continue...")
+subpage.place(x = 185, y = 285)
+next = Button(root,text = "Next",padx = 20,pady = 10,command  = destroy1)
+next.place(x= 330,y = 550)
+
+
+
+def page2():
+    global frame
+    frame = LabelFrame(root, padx=130, pady=70, border=5)
+    frame.grid(row = 0,column = 1,padx=20, pady=20)
+    page2 = Label(frame,text = "Hi there").pack()
+    subpage1 = Label(frame,text = "")
+    subpage2 = Label(frame,text = "Please enter correct details").pack()
+    global age,age1,next2
+    age = Label(root,text = "ENTER YOUR AGE")
+    age.grid(row = 1 , column = 1)
+    age1 = Entry(root,text = "Click to enter age")
+    age1.grid(row = 2,column = 1)
+    next2 = Button(root,text = "Submit",padx = 20,pady = 10,command  = destroy2)
+    next2.grid(row = 3,column = 1)
+
+
+def destroy2():
+
+    global my_age
+    my_age= age1.get()
+    if int(age1.get()) == 0:
+        messagebox.showwarning("Warning","Enter Valid Age Number")
+        page2()
+
+    else:
+        age.destroy()
+        age1.destroy()
+        next2.destroy()
+
+        global name,name1,next3
+        name = Label(root,text = "ENTER YOUR FULL NAME")
+        name.grid(row = 1 , column = 1)
+        name1 = Entry(root,text = "Click to enter name")
+        name1.grid(row = 2,column = 1)
+        next3 = Button(root,text = "Submit",padx = 20,pady = 10,command  = destroy3)
+        next3.grid(row = 3,column = 1)
+
+
+def destroy3():
+    name.destroy()
+    global my_name
+    my_name= name1.get()
+    if str(name1.get())==0:
+        messagebox.showwarning("Warning","Enter Valid Name!!")
+        destroy2()
+    else:
+        name1.destroy()
+        next3.destroy()
+
+        global bodytemp,bodytemp1,next4,t1,t2,t3,t4,r
+        r = IntVar()
+        bodytemp1 = LabelFrame(root, padx=33, pady=70, border=5)
+        bodytemp1.grid(row=1, column=1)
+        bodytemp = Label(bodytemp1, text="CHOOSE YOUR BODY TEMPERATURE RANGE IN DEGREE FARHENIET")
+        bodytemp.grid(row=1, column=2)
+        t1 = Radiobutton(bodytemp1, text="80-90F", variable=r, value=1)
+        t1.grid(row=2, column=1)
+        t2 = Radiobutton(bodytemp1, text="90-100F", variable=r, value=2)
+        t2.grid(row=2, column=2)
+        t3 = Radiobutton(bodytemp1, text="100-105F", variable=r, value=3)
+        t3.grid(row=3, column=1)
+        t4 = Radiobutton(bodytemp1, text="107-120F", variable=r, value=4)
+        t4.grid(row=3, column=2)
+        next4 = Button(bodytemp1, text="Submit", padx=5, pady=5, command=destroy4)
+        next4.grid(row=5, column=2)
+
+def destroy4():
+    global my_temp,temp
+    my_temp = r.get()
+    if my_temp == 1:
+        temp = "80-90F"
+    elif my_temp == 2:
+        temp = "90-100F"
+    elif my_temp == 3:
+        temp = "100-105F"
+    elif my_temp == 4:
+        temp = "107-120F"
+
+
+    if int(r.get()) == 0:
+        messagebox.showwarning("Warning", "Select any Option!!")
+        destroy3()
+    else:
+        bodytemp1.destroy()
+        global out1,next5,next6
+        out1 = Label(root, text="DID YOU WENT OUTSIDE FROM LAST 28-30 DAYS?")
+        out1.grid(row=1, column=1)
+        next5 = Button(root, text="YES",padx=5,pady=5,command = lambda: destroy5(1))
+        next5.grid(row=3, column=1)
+        next6 = Button(root, text="NO", padx=5, pady=5, command = lambda: destroy5(0))
+        next6.grid(row=4,column = 1)
+
+
+
+def destroy5(n):
+    global my_out,out
+    my_out = n
+    if my_out == 1:
+        out = "YES:/"
+    elif my_out ==0:
+        out = "NO:)"
+    out1.destroy()
+    next5.destroy()
+    next6.destroy()
+
+    global feel,feel1,r
+    r = IntVar()
+    feel1 = LabelFrame(root,padx = 33,pady =70,border = 5)
+    feel1.grid(row = 1,column = 1)
+    feel = Label(feel1, text="Do you have any of these symptoms??")
+    feel.grid(row=1, column=2)
+    f1 = Radiobutton(feel1, text="Cough", variable=r, value=1)
+    f1.grid(row =2,column = 1)
+    f2 = Radiobutton(feel1, text="Soar Throat", variable=r, value=2)
+    f2.grid(row = 2,column =2)
+    f3 = Radiobutton(feel1, text="Painful Breathing", variable=r, value=3)
+    f3.grid(row = 3,column = 1)
+    f4 = Radiobutton(feel1, text="Recurring Headache", variable=r, value=4)
+    f4.grid(row = 3,column = 2)
+    f4 = Radiobutton(feel1, text="None Of The Above", variable=r, value=5)
+    f4.grid(row = 4,column = 1)
+    next7 = Button(feel1, text="Submit", padx=5, pady=5,  command=destroy6)
+    next7.grid(row=5,column = 2)
+
+def destroy6():
+    global my_feel,feel
+    my_feel = r.get()
+    if my_feel == 1:
+        feel = "Cough"
+    elif my_feel == 2:
+        feel = "Soar Throat"
+    elif my_feel == 3:
+        feel = "Painful Breathing"
+    elif my_feel == 4:
+        feel = "Recurring Heaadache"
+    else:
+        feel = "None"
+    if int(r.get()) == 0:
+        messagebox.showwarning("Warning", "Select any Option!!")
+        destroy5()
+
+    else:
+        feel1.destroy()
+        frame.destroy()
+        mainpage()
+
+def mainpage():
+    profile = Label(root,text = "Profile",padx= 10,pady = 10,font = ("Normal,20"))
+    profile.grid(row = 0,column = 1)
+    my_profile()
+
+def my_profile():
+    global main2
+    main2 = LabelFrame(root,text = "Your Report",padx = 80,pady = 50)
+    main2.grid(row = 1,column =1,padx= 20,pady = 20)
+
+    if my_temp == 1:
+        report1 = Label(main2,text = "Your Body Temperature is Normal...")
+        report1.grid(row = 1,column = 2)
+
+    elif my_temp == 2 or my_temp == 3:
+        report1 = Label(main2, text = "Your Body Temperature is not Normal")
+        report1.grid(row=1, column=2)
+
+    else:
+        report1 = Label(main2, text = "Your Body Temperature is Very High")
+        report1.grid(row=1, column=2)
+
+    if my_out == 1:
+        report2 = Label(main2,text = "Quarentine Yourself for next 14 days")
+        report2.grid(row=2, column=2)
+
+    else:
+        report2 = Label(main2,text = "Good...Don't Go Out!!")
+        report2.grid(row=2, column=2)
+
+    if my_feel != 5:
+        report3 = Label(main2,text = "You are Sick,Consult a Doctor")
+        report3.grid(row=3, column=2)
+
+    else:
+        report3 = Label(main2,text = "You Look Fine:)")
+        report3.grid(row=3, column=2)
+
+    if my_temp == 1 or my_temp == 2 and my_feel == 1 or my_feel == 2 or my_feel == 5:
+        result = Label(main2,text = "YOU ARE SAFE",bg = "green",font = ("Times,15"))
+        result.grid(row = 4,column = 2)
+
+    else:
+        result = Label(main2, text="YOU MIGHT BE INFECTED", bg="red", font=("Times,15"))
+        result.grid(row=4, column=2)
+
+    global  main3
+    main3 = LabelFrame(root,padx=100,pady=50,border=5)
+    main3.grid(row =2,column=1,padx= 20,pady =20)
+    name = Label(main3,text ="Name: "+ my_name)
+    name.grid(row =1,column =1)
+    age = Label(main3,text ="Age:" +my_age)
+    age.grid(row = 2,column = 1)
+    body = Label(main3,text = "Body Temp.: "+temp)
+    body.grid(row = 3,column = 1)
+    fell = Label(main3,text = "Symptoms: "+feel)
+    fell.grid(row = 4,column = 1)
+    outy = Label(main3,text = "Went Outside in last few days?: " + out)
+    outy.grid(row = 5,column = 1)
+
+    repass = Button(root,text = "Edit Profile",command = again)
+    repass.place(x= 350,y=550)
+
+def again():
+    main2.destroy()
+    main3.destroy()
+    page2()
+
+
+
+root.mainloop()
