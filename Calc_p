@@ -1,1 +1,384 @@
+from tkinter import *
+from tkinter import messagebox
+
+
+
+root = Tk()
+root.title("Calculator")
+root.bg = 'white'
+
+root.iconbitmap('E:/')
+
+yup = messagebox.showinfo("Welcome Note","Hi There!, This is a Calculator made by Ayush, it can used instead of default calculator "
+                                         "as it is simple, easy to use, fast. All the Errors has been corrected"
+                                         "byt it still have few errors. So please ignore them:) this Program is made in Python language ")
+
+
+d = Entry(root,width = 40,borderwidth = 3)
+d.grid(row = 0,column = 0,columnspan = 4,pady= 20,ipady = 4)
+
+
+e = Entry(root,width = 42,borderwidth = 3)
+e.grid(row = 1,column = 0,columnspan=4,pady= 20,ipady = 10)
+
+
+
+
+
+        #Valid resource names: background, bd, bg, borderwidth, 
+        #cursor,
+        #exportselection, fg, font, foreground, highlightbackground,
+        #highlightcolor, highlightthickness, insertbackground,
+        #insertborderwidth, insertofftime, insertontime, insertwidth,
+        #invalidcommand, invcmd, justify, relief, selectbackground,
+        #selectborderwidth, selectforeground, show, state, takefocus,
+        #textvariable, validate, validatecommand, vcmd, width,
+        #xscrollcommand.
+        
+        
+def item(word):
+    return list(word)
+
+
+
+def work(num):
+    
+    global num1
+    global nums
+    global output
+    global num2
+    print(num)
+    
+    e.insert(100,num)
+    num1 = e.get()
+    for value in range(0,len(num1)):            #this is filtering
+        
+        
+        if num1[0] == '*':                  
+            e.delete(0,END)
+        
+        elif num1[0] == '/':
+            e.delete(0,END)
+            
+        elif num1[0] == '+':
+            e.delete(0,1)
+            
+        elif num1[value] == '.':
+            for i in range(value+1,len(num1)):     #improving decimal points problem
+                if num1[i] =='.':
+                    e.delete(i)
+
+
+
+
+        
+    for value in range(1,len(num1)):
+        if num1[value] == '+':
+            e.delete(0,END)
+            d.insert(END,num1)
+            num2 = d.get()
+            
+            
+        elif num1[value] == '-':
+            e.delete(0,END)
+            d.insert(END,num1)
+            num2 = d.get()
+                          
+            
+                        
+        elif num1[value] == '*':
+            e.delete(0,END)
+            d.insert(END,num1)
+            num2 = d.get()
+
+
+
+        elif num1[value] == '/':
+            e.delete(0,END)
+            d.insert(END,num1)
+            num2 = d.get()
+
+    num2 = d.get()
+    for value in range(1,len(num2)):
+        if num2[value] == '+' or num2[value] == '-' or num2[value] == '*' or num2[value] == '/':
+            for i in range(value+1,len(num2)):
+                if num2[i] == '+' or num2[i] == '-' or num2[i] == '*' or num2[i] == '/' :
+                    num3 = num2[0:-1]
+                    d.delete(0,END)
+                    d.insert(0,num3)
+                    equalta(num2[i])
+
+
+
+
+
+
+def equalta(sign):                               ###########################################################################
+    num2 = d.get()
+
+    for value in range(1,len(num2)):
+
+        if num2[value] == '+':
+            nums = num2.split('+')
+            nums[0] = float(nums[0])
+            nums[1] = float(nums[1])
+            d.delete(0,END)
+            d.insert(0,sum(nums))
+            d.insert(END, sign)
+
+        elif num2[value] == '-':
+            list1 = (item(num2))
+            if list1[0] == '-':  # mess for subtraction
+                list1.remove(list1[0])
+                num2 = ''.join(list1)
+                nums = num2.split('-')
+                nums[0] = float(nums[0])
+                nums[1] = float(nums[1])
+
+                output = -abs(nums[0]) - nums[1]
+                d.delete(0, END)
+                d.insert(0, output)
+                d.insert(END, sign)
+
+            else:
+                nums = num2.split('-')
+                nums[0] = float(nums[0])
+                nums[1] = float(nums[1])
+
+                output = nums[0] - nums[1]
+                d.delete(0, END)
+                d.insert(0, output)
+                d.insert(END, sign)
+
+
+
+        elif num2[value] == '*':
+            nums = num2.split('*')
+            nums[0] = float(nums[0])
+            nums[1] = float(nums[1])
+            output = nums[0]*nums[1]
+            d.delete(0,END)
+            d.insert(0,output)
+            d.insert(END, sign)
+
+        elif num2[value] == '/':
+            nums = num2.split('/')
+            nums[0] = float(nums[0])
+            nums[1] = float(nums[1])
+            output = nums[0]/nums[1]
+            d.delete(0,END)
+            d.insert(0,output)
+            d.insert(END,sign)
+
+
+
+
+
+
+def equal(get):                                                 ###########################################################
+    
+        num1 = e.get()
+        num2 = d.get()
+        
+        for value in range(1,len(num2)):
+                        
+            if num2[value] == '+':
+                nums = num2.split('+')
+                nums[0] = float(nums[0])
+                (output) = nums[0] + float(num1)
+                e.delete(0, END)
+                d.delete(0, END)
+                e.insert(0, output)
+                print(num1)
+                print(nums)
+                print(num2)
+                print(output) 
+                          
+    
+                
+            elif num2[value] == '-':
+                list1 = (item(num2))
+                if list1[0] == '-':                  #mess for subtraction
+                    list1.remove(list1[0])
+                    num2 = ''.join(list1)
+                    nums = num2.split('-')
+                    nums[0] = float(nums[0])
+                            
+                        
+                    (output) = -abs(nums[0]) - float(num1)
+                    e.delete(0, END)
+                    d.delete(0, END)
+                    e.insert(0, output)
+                    print(num1)
+                    print(nums)
+                    print(num2)
+                    print(output) 
+                        
+                        
+                else:
+                        nums = num2.split('-')
+                        nums[0] = float(nums[0])
+                
+                        (output) = nums[0] - float(num1)
+                        e.delete(0, END)
+                        d.delete(0, END)
+                        e.insert(0, output)
+                        print(num1)
+                        print(nums)
+                        print(num2)
+                        print(output) 
+                                  
+                                                    
+                                        
+                                    
+                    
+                        
+                        
+                
+
+                            
+                
+
+            
+            elif num2[value] == '*':
+                nums = num2.split('*')
+                nums[0] = float(nums[0])
+                
+                output = nums[0] * float(num1)
+                e.delete(0, END)
+                d.delete(0, END)
+                e.insert(0, output)
+                print(num1)
+                print(nums)
+                print(num2)
+                print(output) 
+                
+                
+            elif num2[value] == '/':
+                nums = num2.split('/')
+                nums[0] = float(nums[0])
+                
+                output = nums[0] / float(num1)
+                e.delete(0, END)
+                d.delete(0, END)
+                e.insert(0, output)
+                print(num1)
+                print(nums)
+                print(num2)
+                print(output)
+
+def clr(get):
+    
+    e.delete(0,END)
+    
+    d.delete(0,END) 
+    
+    
+def delete(get):
+    e.get()
+    e.delete(-1)
+    
+    
+
+      
+        
+
+
+#buttonss
+
+button1 = Button(root,text = "1",padx = 25,pady = 20,command = lambda: work(1))
+button2 = Button(root,text = "2",padx = 25,pady = 20,command = lambda: work(2))
+button3 = Button(root,text = "3",padx = 25,pady = 20,command = lambda: work(3))
+button4 = Button(root,text = "4",padx = 25,pady = 20,command = lambda: work(4))
+button5 = Button(root,text = "5",padx = 25,pady = 20,command = lambda: work(5))
+button6 = Button(root,text = "6",padx = 25,pady = 20,command = lambda: work(6))
+button7 = Button(root,text = "7",padx = 25,pady = 20,command = lambda: work(7))
+button8 = Button(root,text = "8",padx = 25,pady = 20,command = lambda: work(8))
+button9 = Button(root,text = "9",padx = 25,pady = 20,command = lambda: work(9))
+button0 = Button(root,text = "0",padx = 60,pady = 20,command = lambda: work(0))
+button_dot = Button(root,text = ".",highlightthickness = 2,padx = 25,pady = 20,command = lambda: work(str(".")))
+
+
+button_add = Button(root,text = "+",padx = 25,pady = 55,command = lambda: work(str("+")))
+button_sub = Button(root,text = "-",padx = 25,pady = 20,command = lambda: work(str("-")))
+button_mul = Button(root,text = "*",padx = 25,pady = 20,command = lambda: work(str("*")))
+button_div = Button(root,text = "/",padx = 25,pady = 20,command = lambda: work(str("/")))
+button_equ = Button(root,text = "=",padx = 25,pady = 55,command = lambda: equal(1))
+button_clr = Button(root,text = "C",padx = 25,pady = 20,command = lambda: clr(1))
+'''
+            #Reliefs = flat,groove,raised,ridge,solid,sunken
+            
+            #activebackground, activeforeground, anchor,
+            #background, bitmap, borderwidth, cursor,
+            #disabledforeground, font, foreground
+            #highlightbackground, highlightcolor,
+            #highlightthickness, image, justify,
+            #padx, pady, relief, repeatdelay,
+            #repeatinterval, takefocus, text,
+            #textvariable, underline, wraplength
+            
+            #command, compound, default, height,
+            #overrelief, state, width
+'''
+
+
+#locations
+button1.grid(row = 5,column = 0)    #1.2.3.4.5
+button2.grid(row = 5,column = 1)
+button3.grid(row = 5,column = 2)
+
+button4.grid(row = 4,column = 0)
+button5.grid(row = 4,column = 1)
+button6.grid(row = 4,column = 2)
+
+button7.grid(row = 3,column = 0)
+button8.grid(row = 3,column = 1)
+button9.grid(row = 3,column = 2)
+
+button0.grid(row = 6,column = 0,columnspan = 2)
+button_dot.grid(row = 6,column = 2)
+
+button_add.grid(row = 3,column = 3,rowspan = 2)
+button_equ.grid(row = 5,column = 3,rowspan = 2)
+button_sub.grid(row = 2,column = 3)
+button_mul.grid(row = 2,column = 2)
+button_div.grid(row = 2,column = 1)
+button_clr.grid(row = 2,column = 0)  
+
+root.bind('1',lambda a: work(1))
+root.bind('2',lambda a: work(2))
+root.bind('3',lambda a: work(3))
+root.bind('4',lambda a: work(4))
+root.bind('5',lambda a: work(5))
+root.bind('6',lambda a: work(6))
+root.bind('7',lambda a: work(7))
+root.bind('8',lambda a: work(8))
+root.bind('9',lambda a: work(9))
+root.bind('0',lambda a: work(0))
+root.bind('.',lambda a: work(str(".")))
+root.bind('+',lambda a: work(str("+")))
+root.bind('-',lambda a: work(str("-")))
+root.bind('*',lambda a: work(str("*")))
+root.bind('/',lambda a: work(str("/")))
+root.bind('<Key-Return>',lambda a: equal(1))
+root.bind('<Key-Delete>',lambda a: clr(1))
+root.bind('<Key-Escape>',lambda a: clr(1))
+root.bind('<Key-BackSpace>',lambda a: delete(1))
+#images
+
+
+
+
+
+
+
+
+
+
+
+root.mainloop()
+
+
+
+
 
